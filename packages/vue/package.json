@@ -1,0 +1,20 @@
+{
+  "name": "@debug-mate/vue",
+  "version": "1.0.0",
+  "description": "DebugMate Vue utility library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@debug-mate/core": "workspace:^",
+    "vue-demi": "^0.14.10"
+  },
+  "devDependencies": {
+    "@debug-mate/types": "workspace:^",
+    "vue": "^3.5.13"
+  }
+}

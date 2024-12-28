@@ -1,0 +1,28 @@
+{
+  "name": "@debug-mate/core",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/debug-mate.umd.cjs",
+  "module": "./dist/debug-mate.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    "types": "./dist/main.d.ts",
+    "import": "./dist/debug-mate.js",
+    "require": "./dist/debug-mate.umd.cjs"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "@debug-mate/types": "workspace:^",
+    "typescript": "~5.7.2",
+    "vite": "^6.0.1",
+    "vite-plugin-dts": "^4.4.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "root",
+  "private": true,
+  "author": "TaroXin",
+  "scripts": {
+    "bootstrap": "pnpm i"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.12.1",
+    "eslint": "^9.17.0",
+    "lerna": "^8.1.9",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6"
+  }
+}

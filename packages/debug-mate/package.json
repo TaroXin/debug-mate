@@ -1,0 +1,13 @@
+{
+  "name": "debug-mate-chrome-extension",
+  "private": true,
+  "version": "1.0.0",
+  "description": "DebugMate Chrome extension",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "TaroXin",
+  "license": "MIT"
+}
