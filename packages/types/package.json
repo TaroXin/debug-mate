@@ -2,7 +2,7 @@
   "name": "@debug-mate/types",
   "version": "1.0.0",
   "description": "DebugMate type declaration library",
-  "main": "index.ts",
+  "main": "lib/index.ts",
   "scripts": {
     "build": "vite build"
   },

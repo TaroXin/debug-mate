@@ -1,19 +1,3 @@
-// interface TypeMaps {
-//   string: string
-//   email: string
-//   url: string
-//   wsUrl: string
-//   json: string
-//   number: number
-//   integer: number
-//   float: number
-//   boolean: boolean
-//   date: Date
-//   time: Date
-//   datetime: Date
-//   color: string
-// }
-
 export type NeedsVariableType =
   | 'string'
   | 'email'
@@ -22,29 +6,39 @@ export type NeedsVariableType =
   | 'json'
   | 'number'
   | 'integer'
-  | 'float'
   | 'boolean'
   | 'date'
   | 'time'
   | 'datetime'
   | 'color'
 
-export interface NeedVariableOptions {
+export type TypeMaps<T> =
+  T extends 'string' | 'email' | 'url' | 'wsUrl' | 'json' ? string :
+    T extends 'number' | 'integer' ? number :
+      T extends 'boolean' ? boolean :
+        T extends 'date' | 'time' | 'datetime' ? number :
+          T extends 'color' ? string :
+            any
+
+export interface NeedVariableOptions<T extends NeedsVariableType> {
   /**
    * The name of the variable.
    *
-   * 当前变量的名称
+   * 变量的名称。
    */
   name: string
 
-  type: NeedsVariableType
+  /**
+   * The type of the variable.
+   *
+   * 变量的类型。
+   */
+  type: T
 
   /**
    * The label displayed for the variable in the DateMate plugin.
-   * which defaults to the name attribute that is set.
    *
    * 显示在 DateMate 插件中的变量标题，
-   * 默认为 name 属性。
    */
   label?: string
 
@@ -59,11 +53,8 @@ export interface NeedVariableOptions {
    * The default value of the variable.
    *
    * 变量的默认值。
-   *
-   * 这里的类型不应该是 any，而是根据 type 属性来确定。
-   * 但是这个类型声明我不会写！
    */
-  default?: any
+  default?: TypeMaps<T>
 
   /**
    * Is it a private variable?
@@ -91,15 +82,5 @@ export interface NeedVariableOptions {
    *
    * 这里的 value 类型也不应该是 any，而是根据 type 属性来确定。
    */
-  onChange?: (value: any) => void
-
-}
-
-export const options: NeedVariableOptions = {
-  name: 'name',
-  type: 'json',
-  label: 'label',
-  description: 'description',
-  default: '111',
-  private: true,
+  onChange?: (value: TypeMaps<T>) => void
 }

@@ -1,11 +1,25 @@
-import type { NeedVariableOptions } from '@debug-mate/types'
+import type { NeedCallback, NeedsVariableType, NeedVariableOptions } from '@debug-mate/types'
 
-export function need(options: NeedVariableOptions) {
+const valueChangeListeners: Record<string, NeedCallback<any>[]> = {}
+
+export function need<T extends NeedsVariableType>(options: NeedVariableOptions<T>) {
+  if (options.onChange) {
+    addValueChangeListener<T>(options.name, options.onChange)
+  }
   return options
 }
 
-export function addValueChangeListener(name: string, callback: (value: any) => void) {
-  return name + callback
+export function addValueChangeListener<T extends NeedsVariableType>(key: string, callback: NeedCallback<T>) {
+  valueChangeListeners[key] = valueChangeListeners[key] || []
+  valueChangeListeners[key].push(callback)
+}
+
+export function removeValueChangeListener<T extends NeedsVariableType>(key: string, callback: NeedCallback<T>) {
+  if (valueChangeListeners[key]) {
+    valueChangeListeners[key] = valueChangeListeners[key].filter(
+      listener => listener !== callback,
+    )
+  }
 }
 
 export function setPublicKey(publicKey: string) {
@@ -15,5 +29,6 @@ export function setPublicKey(publicKey: string) {
 export default {
   need,
   addValueChangeListener,
+  removeValueChangeListener,
   setPublicKey,
 }
