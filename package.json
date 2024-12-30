@@ -5,6 +5,7 @@
   "scripts": {
     "bootstrap": "pnpm i"
   },
+  "packageManager": "pnpm@9.15.0",
   "workspaces": [
     "packages/*"
   ],
