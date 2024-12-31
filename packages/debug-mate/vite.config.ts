@@ -1,16 +1,37 @@
 import vue from '@vitejs/plugin-vue'
-import copy from 'rollup-plugin-copy'
 import UnoCSS from 'unocss/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     UnoCSS(),
-    copy({
+    AutoImport({
+      dts: true,
+      imports: [
+        'vue',
+        {
+          'naive-ui': [
+            'useDialog',
+            'useMessage',
+            'useNotification',
+            'useLoadingBar',
+          ],
+        },
+      ],
+    }),
+    Components({
+      dts: true,
+      resolvers: [NaiveUiResolver()],
+    }),
+    viteStaticCopy({
       targets: [
-        { src: 'manifest.json', dest: 'dist' },
+        { src: 'manifest.json', dest: '.' },
       ],
     }),
   ],
