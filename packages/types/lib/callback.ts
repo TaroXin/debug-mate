@@ -1,3 +1,3 @@
-import type { NeedsVariableType, TypeMaps } from './need'
+import type { NeedVariableType, TypeMaps } from './need'
 
-export type NeedCallback<T extends NeedsVariableType> = (value: TypeMaps<T>) => void
+export type NeedCallback<T extends NeedVariableType> = (value: TypeMaps<T>) => void

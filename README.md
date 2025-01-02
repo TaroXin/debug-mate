@@ -32,7 +32,7 @@ tGvnhWu7jkv0xLdmZ12Vk6XbcmO59TbRDVhvmust54iV5bSvthjrzHojpmHwcCR9
 ```js
 import DebugMate from '@debug-mate/core'
 
-const { value: showFormId, setValue } = DebugMate.need({
+const { value: showFormId, setValue } = await DebugMate.need({
     name: 'showFormId',
     title: '是否显示表单ID',
     description: '用于在XXXXX页面显示其表单ID',
@@ -48,6 +48,11 @@ const { value: showFormId, setValue } = DebugMate.need({
 // 订阅值改变
 DebugMate.addValueChangeListener('showFormId', (value) => {})
 ```
+
+- 调用 need 函数
+  - 先判断有没有安装插件，通过设置的特殊值 `window.__IS_DEBUG_MATE__`
+    - 如果没有安装插件，则直接返回默认值
+  - 函数中使用 postMessage 通知 content.js，获取字段值
 
 Vue 使用
 ```ts

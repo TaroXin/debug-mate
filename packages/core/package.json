@@ -24,5 +24,8 @@
     "vite": "^6.0.1",
     "vite-plugin-dts": "^4.4.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@debug-mate/shared": "workspace:^"
+  }
 }

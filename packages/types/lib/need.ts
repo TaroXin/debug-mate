@@ -1,4 +1,4 @@
-export type NeedsVariableType =
+export type NeedVariableType =
   | 'string'
   | 'email'
   | 'url'
@@ -19,7 +19,7 @@ export type TypeMaps<T> =
           T extends 'color' ? string :
             any
 
-export interface NeedVariableOptions<T extends NeedsVariableType> {
+export interface NeedVariableOptions<T extends NeedVariableType = NeedVariableType> {
   /**
    * The name of the variable.
    *

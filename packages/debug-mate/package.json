@@ -11,6 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@debug-mate/shared": "workspace:^",
+    "@debug-mate/types": "workspace:^",
     "@unocss/reset": "^0.65.3",
     "pinia": "^2.3.0",
     "pinia-plugin-persistedstate": "^4.2.0",
