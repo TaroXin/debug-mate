@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="icon.png" width="100" alt="Logo">
+  <img src="icon_128.png" width="128" alt="Logo">
 </p>
 
-<p align="center" style="font-size: 30px; font-weight: bold">
+<p align="center" style="font-size: 24px; font-weight: bold">
     DebugMate
 </p>
 <p align="center">
