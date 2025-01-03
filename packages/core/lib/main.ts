@@ -1,25 +1,43 @@
-import type { NeedCallback, NeedVariableOptions, NeedVariableType, TypeMaps } from '@debug-mate/types'
+import type { NeedCallback, NeedValue, NeedVariableOptions, NeedVariableType, TypeMaps } from '@debug-mate/types'
+import { dispatchNeedEvent } from '@debug-mate/shared'
 
-const valueChangeListeners: Record<string, NeedCallback<any>[]> = {}
+const valueChangeListeners: Record<string, ((value: TypeMaps<any>) => void)[]> = {}
+
+const valueNeedListeners: Record<string, (value: NeedValue) => void> = {}
+
+function needValueListener() {
+  window.addEventListener('debug-mate-need-value', (e: CustomEvent<NeedValue>) => {
+    valueNeedListeners[e.detail.name]?.(e.detail)
+    delete valueNeedListeners[e.detail.name]
+  })
+
+  window.addEventListener('debug-mate-value-change', (e: CustomEvent<NeedValue>) => {
+    valueChangeListeners[e.detail.name]?.forEach((callback) => {
+      callback?.(e.detail.value)
+    })
+  })
+}
+
+needValueListener()
 
 export async function need<T extends NeedVariableType>(options: NeedVariableOptions<T>) {
   if (!window.__IS_DEBUG_MATE__) {
-    return { value: options.default }
+    return {
+      value: options.default,
+      name: options.name,
+    }
   }
 
   if (options.onChange) {
     addValueChangeListener<T>(options.name, options.onChange)
   }
 
-  const needEvent = new CustomEvent('debug-mate-need', {
-    detail: options,
-  })
-
-  return new Promise<{ value: TypeMaps<T> }>((resolve) => {
-    window.dispatchEvent(needEvent)
-    window.addEventListener('debug-event-need-value', (e: CustomEvent<{ value: TypeMaps<T> }>) => {
-      resolve(e.detail)
+  return new Promise<NeedValue>((resolve) => {
+    dispatchNeedEvent({
+      ...options,
+      onChange: undefined,
     })
+    valueNeedListeners[options.name] = resolve
   })
 }
 
