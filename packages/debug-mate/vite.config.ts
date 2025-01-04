@@ -8,6 +8,11 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': 'src',
+    },
+  },
   plugins: [
     vue(),
     UnoCSS(),

@@ -83,3 +83,7 @@ export interface NeedVariableOptions<T extends NeedVariableType = NeedVariableTy
    */
   onChange?: (value: TypeMaps<T>) => void
 }
+
+export type NeedVariableWithValue = NeedVariableOptions & {
+  value?: TypeMaps<NeedVariableType> | null
+}

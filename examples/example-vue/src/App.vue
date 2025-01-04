@@ -4,6 +4,7 @@ import { useDebugMate } from '@debug-mate/vue'
 const { value: showTitle } = useDebugMate({
   type: 'boolean',
   name: 'showTitle',
+  label: '显示标题',
   default: true,
 })
 
@@ -16,10 +17,33 @@ const { value: titleName } = useDebugMate({
 const { value: baseUrl } = useDebugMate({
   type: 'url',
   name: 'baseUrl',
+  label: '基础请求地址',
   default: 'http://',
+  description: '路由的请求路径，设置以后原本的路径无效',
   onChange: (value) => {
     console.warn('值改变了', value)
   },
+})
+
+const { value: date } = useDebugMate({
+  type: 'date',
+  name: 'date',
+  label: '日期',
+  default: Date.now(),
+})
+
+const { value: datetime } = useDebugMate({
+  type: 'datetime',
+  name: 'datetime',
+  label: '日期时间',
+  default: Date.now(),
+})
+
+const { value: number } = useDebugMate({
+  type: 'number',
+  name: 'number',
+  label: '数字',
+  default: 100,
 })
 </script>
 
@@ -36,7 +60,21 @@ const { value: baseUrl } = useDebugMate({
       {{ titleName }}
     </div>
 
-    {{ baseUrl }}
+    <p>
+      {{ baseUrl }}
+    </p>
+
+    <p>
+      {{ date }}
+    </p>
+
+    <p>
+      {{ datetime }}
+    </p>
+
+    <p>
+      {{ number }}
+    </p>
   </div>
 </template>
 

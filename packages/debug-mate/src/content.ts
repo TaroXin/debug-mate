@@ -21,7 +21,7 @@ function addNeedListener() {
     // 获取当前页面的路径，作为当前网站的唯一标识
     const currentOrigin = getCurrentOrigin()
     // 存储变量的配置
-    const key = `${currentOrigin}:${options.name}`
+    const key = `${currentOrigin}:${options.name}:config`
     const valueKey = `${currentOrigin}:${options.name}:value`
     chrome.storage.local.get([key, valueKey], (result) => {
       /**
@@ -38,7 +38,7 @@ function addNeedListener() {
         // 1.1
         if ((result[key] as NeedVariableOptions).type !== options.type) {
           chrome.storage.local.set({
-            [valueKey]: undefined,
+            [valueKey]: options.default,
           })
         }
         // 1.2
@@ -56,7 +56,7 @@ function addNeedListener() {
         })
       }
 
-      dispatchNeedValueEvent(options.name, result[valueKey] || options.default)
+      dispatchNeedValueEvent(options.name, result[valueKey] == null ? options.default : result[valueKey])
     })
   })
 }
@@ -66,9 +66,12 @@ function addStorageChangeListener() {
     // 发布 valueChange 事件
     const currentOrigin = getCurrentOrigin()
     Object.keys(changes).forEach((key) => {
-      if (key.startsWith(`${currentOrigin}:`) && key.endsWith(':value')) {
+      if (key.startsWith(`${currentOrigin}:`) && key.endsWith(':value') && changes[key].oldValue !== undefined) {
         const name = key.split(':')[1]
-        dispatchValueChangeEvent(name, changes[key].newValue)
+        dispatchValueChangeEvent(
+          decodeURIComponent(name),
+          changes[key].newValue,
+        )
       }
     })
   })
