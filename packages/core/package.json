@@ -1,5 +1,6 @@
 {
   "name": "@debug-mate/core",
+  "description": "DebugMate core library",
   "private": true,
   "version": "0.0.0",
   "type": "module",

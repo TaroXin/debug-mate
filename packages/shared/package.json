@@ -1,12 +1,10 @@
 {
   "name": "@debug-mate/shared",
   "version": "1.0.0",
-  "description": "",
+  "description": "DebugMate's sharing tool",
   "type": "module",
   "main": "lib/index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "TaroXin",
   "license": "MIT",

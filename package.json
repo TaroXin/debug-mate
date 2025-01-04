@@ -3,7 +3,9 @@
   "private": true,
   "author": "TaroXin",
   "scripts": {
-    "bootstrap": "pnpm i"
+    "bootstrap": "pnpm i",
+    "build": "lerna run build",
+    "publish": "pnpm run build && lerna publish --registry https://registry.npmjs.org/ --no-git-tag-version --loglevel verbose"
   },
   "packageManager": "pnpm@9.15.0",
   "workspaces": [

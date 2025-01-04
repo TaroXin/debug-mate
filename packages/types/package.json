@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "DebugMate type declaration library",
   "main": "lib/index.ts",
-  "scripts": {
-    "build": "vite build"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "TaroXin",
   "license": "MIT"
