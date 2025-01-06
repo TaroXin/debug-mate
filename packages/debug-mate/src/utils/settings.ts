@@ -18,6 +18,22 @@ export function getValueKey(name: string, origin: string) {
   return `${origin}:${name}:value`
 }
 
+export function getEnableKey(origin: string) {
+  return `${origin}:enable`
+}
+
+export async function getOriginEnabled() {
+  const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
+  const enableKey = getEnableKey(origin)
+  return chrome.storage.local.get(enableKey).then(v => v[enableKey] ?? true)
+}
+
+export async function setOriginEnabled(enabled: boolean) {
+  const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
+  const enableKey = getEnableKey(origin)
+  return chrome.storage.local.set({ [enableKey]: enabled })
+}
+
 export async function getVariableConfig(): Promise<NeedVariableWithValue[]> {
   const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
   const keys = await chrome.storage.local.getKeys()

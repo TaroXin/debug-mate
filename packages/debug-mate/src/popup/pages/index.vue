@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import type { NeedVariableWithValue } from '@debug-mate/types'
 import type { DatePickerType } from 'naive-ui/es/date-picker/src/config'
-import { getCurrentOrigin, getValueKey, getVariableConfig } from '@/utils/settings.ts'
+import { getCurrentOrigin, getOriginEnabled, getValueKey, getVariableConfig, setOriginEnabled } from '@/utils/settings.ts'
 
 const configs = ref<NeedVariableWithValue[]>([])
 const saveLoading = ref(false)
+const enabled = ref(false)
 
-async function getConfigs() {
+async function initialConfigs() {
   configs.value = await getVariableConfig()
+  enabled.value = await getOriginEnabled()
 }
 
 async function saveChange() {
@@ -22,7 +24,11 @@ async function saveChange() {
   saveLoading.value = false
 }
 
-getConfigs()
+async function handleEnabledChanged(v: boolean) {
+  await setOriginEnabled(v)
+}
+
+initialConfigs()
 </script>
 
 <template>
@@ -32,6 +38,19 @@ getConfigs()
     label-align="left"
     class="max-w-80%"
   >
+    <n-form-item label="启用配置">
+      <n-switch v-model:value="enabled" @change="handleEnabledChanged" />
+    </n-form-item>
+    <n-divider style="margin-top: 0">
+      <div flex="~ items-center gap-10" class="text-14 opacity-50">
+        <div i-icon-park-outline-arrow-down />
+        <div>页面变量</div>
+        <div i-icon-park-outline-arrow-down />
+      </div>
+    </n-divider>
+
+    <n-empty v-if="configs.length === 0" description="暂无页面变量" />
+
     <n-form-item v-for="config in configs" :key="config.name" :label="config.label || config.name">
       <template v-if="['string', 'url', 'wsUrl', 'email'].includes(config.type)">
         <n-input :value="config.value as string" clearable @update:value="(value) => (config.value = value)" />
@@ -58,7 +77,7 @@ getConfigs()
         {{ config.description }}
       </n-tooltip>
     </n-form-item>
-    <n-form-item label=" ">
+    <n-form-item v-if="configs.length > 0" label=" ">
       <n-button
         type="primary"
         secondary
