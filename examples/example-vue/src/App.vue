@@ -43,6 +43,20 @@ gQIDAQAB
 -----END PUBLIC KEY-----
 `)
 
+const { value: showViteIcon } = useDebugMate({
+  type: 'boolean',
+  name: 'showViteIcon',
+  label: '显示Vite图标',
+  default: true,
+})
+
+const { value: showVueIcon } = useDebugMate({
+  type: 'boolean',
+  name: 'showVueIcon',
+  label: '显示Vue图标',
+  default: true,
+})
+
 const { value: showTitle } = useDebugMate({
   type: 'boolean',
   name: 'showTitle',
@@ -99,10 +113,10 @@ const { value: privateString } = useDebugMate({
 
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
+    <a v-if="showViteIcon" href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo">
     </a>
-    <a href="https://vuejs.org/" target="_blank">
+    <a v-if="showVueIcon" href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo">
     </a>
 
