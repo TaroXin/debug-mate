@@ -9,6 +9,8 @@
     面向开发人员与测试人员的调试伙伴
 </p>
 
+DateMate 使用 [jsencrypt](https://www.npmjs.com/package/jsencrypt?activeTab=readme) 实现 RSA 加密解密，你可以根据其中的示例内容获取公私钥配置
+
 ```ts
 // 调试参数私有化
 import DebugMate from '@debug-mate/core'

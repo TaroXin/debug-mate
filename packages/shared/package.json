@@ -9,6 +9,7 @@
   "author": "TaroXin",
   "license": "MIT",
   "dependencies": {
-    "@debug-mate/types": "workspace:^"
+    "@debug-mate/types": "workspace:^",
+    "jsencrypt": "^3.3.2"
   }
 }

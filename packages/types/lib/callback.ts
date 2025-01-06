@@ -4,5 +4,5 @@ export type NeedCallback<T extends NeedVariableType> = (value: TypeMaps<T>) => v
 
 export interface NeedValue<T extends NeedVariableType = NeedVariableType> {
   name: string
-  value: TypeMaps<T>
+  value?: TypeMaps<T>
 }

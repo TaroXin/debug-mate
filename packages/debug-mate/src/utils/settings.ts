@@ -22,6 +22,10 @@ export function getEnableKey(origin: string) {
   return `${origin}:enable`
 }
 
+export function getPrivateStorageKey(origin: string) {
+  return `${origin}:privateKey`
+}
+
 export async function getOriginEnabled() {
   const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
   const enableKey = getEnableKey(origin)
@@ -32,6 +36,18 @@ export async function setOriginEnabled(enabled: boolean) {
   const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
   const enableKey = getEnableKey(origin)
   return chrome.storage.local.set({ [enableKey]: enabled })
+}
+
+export async function getOriginPrivateKey() {
+  const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
+  const key = getPrivateStorageKey(origin)
+  return chrome.storage.local.get(key).then(v => v[key])
+}
+
+export async function setOriginPrivateKey(privateKey: string) {
+  const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
+  const key = getPrivateStorageKey(origin)
+  return chrome.storage.local.set({ [key]: privateKey })
 }
 
 export async function getVariableConfig(): Promise<NeedVariableWithValue[]> {

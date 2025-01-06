@@ -1,9 +1,11 @@
 import type { NeedCallback, NeedValue, NeedVariableOptions, NeedVariableType, TypeMaps } from '@debug-mate/types'
-import { dispatchNeedEvent } from '@debug-mate/shared'
+import { dispatchNeedEvent, encodePrivate } from '@debug-mate/shared'
 
 const valueChangeListeners: Record<string, ((value: TypeMaps<any>) => void)[]> = {}
 
 const valueNeedListeners: Record<string, (value: NeedValue) => void> = {}
+
+let _publicKey = ''
 
 function needValueListener() {
   window.addEventListener('debug-mate-need-value', (e: CustomEvent<NeedValue>) => {
@@ -33,8 +35,31 @@ export async function need<T extends NeedVariableType>(options: NeedVariableOpti
   }
 
   return new Promise<NeedValue>((resolve) => {
+    let encodeName: string | false = options.name
+    if (options.private) {
+      if (!_publicKey) {
+        console.warn('Please set the public key before using the need function with private variables.')
+        resolve({
+          value: options.default,
+          name: options.name,
+        })
+        return
+      }
+
+      encodeName = encodePrivate(options.name, _publicKey)
+      if (!encodeName) {
+        console.warn('Encode private variable failed, please check the public key.')
+        resolve({
+          value: options.default,
+          name: options.name,
+        })
+        return
+      }
+    }
+
     dispatchNeedEvent({
       ...options,
+      name: encodeName || options.name,
       onChange: undefined,
     })
     valueNeedListeners[options.name] = resolve
@@ -55,7 +80,7 @@ export function removeValueChangeListener<T extends NeedVariableType>(key: strin
 }
 
 export function setPublicKey(publicKey: string) {
-  return publicKey
+  _publicKey = publicKey
 }
 
 export default {

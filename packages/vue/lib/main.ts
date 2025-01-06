@@ -1,6 +1,6 @@
 import type { NeedVariableOptions, NeedVariableType, TypeMaps } from '@debug-mate/types'
 
-import { addValueChangeListener, need } from '@debug-mate/core'
+import { addValueChangeListener, setPublicKey as coreSetPublicKey, need } from '@debug-mate/core'
 import { ref } from 'vue-demi'
 
 export function useDebugMate<T extends NeedVariableType>(options: NeedVariableOptions<T>) {
@@ -17,4 +17,8 @@ export function useDebugMate<T extends NeedVariableType>(options: NeedVariableOp
   return {
     value,
   }
+}
+
+export function setPublicKey(publicKey: string) {
+  coreSetPublicKey(publicKey)
 }

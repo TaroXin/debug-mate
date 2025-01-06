@@ -1,5 +1,5 @@
 import type { NeedVariableOptions } from '@debug-mate/types'
-import { dispatchNeedValueEvent, dispatchValueChangeEvent, listenNeedEvent } from '@debug-mate/shared'
+import { decodePrivate, dispatchNeedValueEvent, dispatchValueChangeEvent, listenNeedEvent } from '@debug-mate/shared'
 import { loggerWarn } from './utils/console.ts'
 
 function getCurrentOrigin(): string {
@@ -7,15 +7,20 @@ function getCurrentOrigin(): string {
 }
 
 export function getConfigKey(name: string, origin: string) {
-  return `${origin}:${name}:config`
+  return `${origin}:${encodeURIComponent(name)}:config`
 }
 
 export function getValueKey(name: string, origin: string) {
-  return `${origin}:${name}:value`
+  return `${origin}:${encodeURIComponent(name)}:value`
 }
 
 export function getEnableKey(origin: string) {
   return `${origin}:enable`
+}
+
+export async function getPrivateKey(origin: string) {
+  const key = `${origin}:privateKey`
+  return (await chrome.storage.local.get(key))[key]
 }
 
 function injectScript() {
@@ -30,8 +35,25 @@ function addNeedListener() {
       loggerWarn('need event type or name is empty')
       return
     }
+
     // 获取当前页面的路径，作为当前网站的唯一标识
     const currentOrigin = getCurrentOrigin()
+
+    // 如果变量是私有的，需要解密变量的 name
+    if (options.private) {
+      const decodeName = decodePrivate(options.name, await getPrivateKey(currentOrigin))
+      if (!decodeName) {
+        loggerWarn('Decode private variable failed, please check your private key')
+        dispatchNeedValueEvent(
+          options.name,
+          options.default,
+        )
+        return
+      }
+
+      options.name = decodeName
+    }
+
     // 存储变量的配置
     const key = getConfigKey(options.name, currentOrigin)
     const valueKey = getValueKey(options.name, currentOrigin)

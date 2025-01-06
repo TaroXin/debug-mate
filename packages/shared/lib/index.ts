@@ -1,3 +1,4 @@
 export * from './dispatch'
-export * from './listener'
+export * from './encrypt'
 export * from './keys'
+export * from './listener'
