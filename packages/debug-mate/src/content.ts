@@ -1,25 +1,23 @@
 import type { NeedVariableOptions } from '@debug-mate/types'
-import { decodePrivate, dispatchNeedValueEvent, dispatchValueChangeEvent, listenNeedEvent } from '@debug-mate/shared'
+import {
+  decodePrivate,
+  dispatchNeedValueEvent,
+  dispatchValueChangeEvent,
+  getConfigKey,
+  getEnableKey,
+  getPrivateKey,
+  getValueKey,
+  listenNeedEvent,
+  STORAGE_VALUE_APPEND,
+} from '@debug-mate/shared'
 import { loggerWarn } from './utils/console.ts'
 
 function getCurrentOrigin(): string {
   return encodeURIComponent(window.location.origin)
 }
 
-export function getConfigKey(name: string, origin: string) {
-  return `${origin}:${encodeURIComponent(name)}:config`
-}
-
-export function getValueKey(name: string, origin: string) {
-  return `${origin}:${encodeURIComponent(name)}:value`
-}
-
-export function getEnableKey(origin: string) {
-  return `${origin}:enable`
-}
-
-export async function getPrivateKey(origin: string) {
-  const key = `${origin}:privateKey`
+export async function getPrivateKeyData(origin: string) {
+  const key = getPrivateKey(origin)
   return (await chrome.storage.local.get(key))[key]
 }
 
@@ -47,7 +45,7 @@ function addNeedListener() {
 
     // 如果变量是私有的，需要解密变量的 name
     if (options.private && options.encodeName) {
-      const decodeName = decodePrivate(options.encodeName, await getPrivateKey(currentOrigin))
+      const decodeName = decodePrivate(options.encodeName, await getPrivateKeyData(currentOrigin))
       if (!decodeName || decodeName !== options.name) {
         loggerWarn('Decode private variable failed, please check your private key')
         dispatchNeedValueEvent(
@@ -112,7 +110,7 @@ function addStorageChangeListener() {
     const isOriginEnable = enabledRes[enableKey] !== false
 
     for (const key of Object.keys(changes)) {
-      if (key.startsWith(`${currentOrigin}:`) && key.endsWith(':value') && changes[key].oldValue !== undefined) {
+      if (key.startsWith(`${currentOrigin}:`) && key.endsWith(STORAGE_VALUE_APPEND) && changes[key].oldValue !== undefined) {
         const name = key.split(':')[1]
         let newValue = changes[key].newValue
         // 如何设置为 null, 或者全局选项未开启， 就返回默认值

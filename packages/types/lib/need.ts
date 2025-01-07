@@ -99,6 +99,6 @@ export type NeedVariableOptionsInner = NeedVariableOptions & {
   sort?: number
 }
 
-export type NeedVariableWithValue = NeedVariableOptions & {
+export type NeedVariableWithValue = NeedVariableOptionsInner & {
   value?: TypeMaps<NeedVariableType> | null
 }

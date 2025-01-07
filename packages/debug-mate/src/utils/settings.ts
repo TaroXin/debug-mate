@@ -1,4 +1,5 @@
 import type { NeedVariableWithValue } from '@debug-mate/types'
+import { getConfigKey, getEnableKey, getPrivateKey, getValueKey, STORAGE_CONFIG_APPEND } from '@debug-mate/shared'
 
 export async function getCurrentOrigin(): Promise<string | undefined> {
   return new Promise((resolve) => {
@@ -8,22 +9,6 @@ export async function getCurrentOrigin(): Promise<string | undefined> {
       }
     })
   })
-}
-
-export function getConfigKey(name: string, origin: string) {
-  return `${origin}:${name}:config`
-}
-
-export function getValueKey(name: string, origin: string) {
-  return `${origin}:${name}:value`
-}
-
-export function getEnableKey(origin: string) {
-  return `${origin}:enable`
-}
-
-export function getPrivateStorageKey(origin: string) {
-  return `${origin}:privateKey`
 }
 
 export async function getOriginEnabled() {
@@ -40,13 +25,13 @@ export async function setOriginEnabled(enabled: boolean) {
 
 export async function getOriginPrivateKey() {
   const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
-  const key = getPrivateStorageKey(origin)
+  const key = getPrivateKey(origin)
   return chrome.storage.local.get(key).then(v => v[key])
 }
 
 export async function setOriginPrivateKey(privateKey: string) {
   const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
-  const key = getPrivateStorageKey(origin)
+  const key = getPrivateKey(origin)
   return chrome.storage.local.set({ [key]: privateKey })
 }
 
@@ -54,7 +39,7 @@ export async function getVariableConfig(): Promise<NeedVariableWithValue[]> {
   const origin = encodeURIComponent(await getCurrentOrigin() ?? '')
   const keys = await chrome.storage.local.getKeys()
   const variableNames = keys.filter(key =>
-    key.startsWith(`${origin}:`) && key.endsWith(':config')).map(k => k.split(':')[1],
+    key.startsWith(`${origin}:`) && key.endsWith(STORAGE_CONFIG_APPEND)).map(k => k.split(':')[1],
   )
 
   const result = await chrome.storage.local.get(
@@ -71,7 +56,7 @@ export async function getVariableConfig(): Promise<NeedVariableWithValue[]> {
     configs.push(c)
   }
 
-  configs.sort((a, b) => a.sort - b.sort)
+  configs.sort((a, b) => a.sort ?? 0 - (b.sort ?? 0))
 
   return configs
 }

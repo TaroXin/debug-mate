@@ -50,6 +50,12 @@ export default defineConfig({
         dir: 'dist',
         assetFileNames: 'assets/[name]-[hash].[ext]',
         chunkFileNames: 'js/[name]-[hash].js',
+        manualChunks(id, chunkMeta) {
+          if (id.endsWith('src/content.ts')) {
+            console.log(id, chunkMeta.getModuleInfo(id))
+            return 'content'
+          }
+        },
         entryFileNames(chunkInfo) {
           if (['content'].includes(chunkInfo.name)) {
             return '[name].js'
@@ -58,6 +64,17 @@ export default defineConfig({
         },
         name: '[name].js',
       },
+      // plugins: [
+      //   {
+      //     name: 'rm-content-last-export',
+      //     generateBundle(_options, bundle) {
+      //       const content = bundle['content.js'] as any
+      //       if (content && content.code) {
+      //         content.code = content.code.replace(/export[^;]+;/, '')
+      //       }
+      //     },
+      //   },
+      // ],
     },
   },
 })
