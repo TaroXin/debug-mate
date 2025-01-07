@@ -55,39 +55,36 @@ function addNeedListener() {
     }
 
     // 存储变量的配置
-    const key = getConfigKey(options.name, currentOrigin)
+    const configKey = getConfigKey(options.name, currentOrigin)
     const valueKey = getValueKey(options.name, currentOrigin)
     const enableKey = getEnableKey(currentOrigin)
-    chrome.storage.local.get([key, valueKey, enableKey], (result) => {
+    chrome.storage.local.get([configKey, valueKey, enableKey], (result) => {
       /**
        * 如果存在这个配置，那么需要更新配置
        * 但是存在以下规则
        *   1. 如果有已有配置
        *     1.1. 如果已存在的配置和现有配置的 type 字段不一样，那么其值设置为默认值，原因是类型的改变会导致以前设置的值可能不匹配
-       *     1.2. 更新已配置的值的其他选项
+       *     1.2. 重新保存配置
        *   2. 如果没有已有配置，那么直接存储这个配置
        *   3. 返回设置的值
        *     3.1 判断总开关是否开启，开启正常返回
        *     3.2 如果总开关关闭，那么返回 default
        */
-      if (result[key]) {
+      if (result[configKey]) {
         // 1.1
-        if ((result[key] as NeedVariableOptions).type !== options.type) {
+        if ((result[configKey] as NeedVariableOptions).type !== options.type) {
           chrome.storage.local.set({
             [valueKey]: options.default,
           })
         }
         // 1.2
         chrome.storage.local.set({
-          [key]: {
-            ...result[key],
-            ...options,
-          },
+          [configKey]: options,
         })
       }
       else {
         chrome.storage.local.set({
-          [key]: options,
+          [configKey]: options,
           [valueKey]: options.default,
         })
       }

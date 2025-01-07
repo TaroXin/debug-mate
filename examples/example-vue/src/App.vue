@@ -85,7 +85,6 @@ const { value: date } = useDebugMate({
   type: 'date',
   name: 'date',
   label: '日期',
-  default: Date.now(),
 })
 
 const { value: datetime } = useDebugMate({
@@ -121,23 +120,23 @@ const { value: privateString } = useDebugMate({
     </a>
 
     <div v-if="showTitle">
-      {{ titleName }}
+      页面标题：{{ titleName }}
     </div>
 
     <p>
-      {{ baseUrl }}
+      基础请求地址：{{ baseUrl }}
     </p>
 
     <p>
-      {{ date }}
+      日期：{{ date }}
     </p>
 
     <p>
-      {{ datetime }}
+      日期时间：{{ datetime }}
     </p>
 
     <p>
-      {{ number }}
+      数字：{{ number }}
     </p>
 
     <p>

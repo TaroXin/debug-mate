@@ -2,7 +2,6 @@ export type NeedVariableType =
   | 'string'
   | 'email'
   | 'url'
-  | 'wsUrl'
   | 'number'
   | 'integer'
   | 'boolean'
@@ -12,7 +11,7 @@ export type NeedVariableType =
   | 'color'
 
 export type TypeMaps<T> =
-  T extends 'string' | 'email' | 'url' | 'wsUrl' ? string :
+  T extends 'string' | 'email' | 'url' ? string :
     T extends 'number' | 'integer' ? number :
       T extends 'boolean' ? boolean :
         T extends 'date' | 'time' | 'datetime' ? number :
