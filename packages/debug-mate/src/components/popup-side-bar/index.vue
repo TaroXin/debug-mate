@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { MenuOption } from 'naive-ui'
-import routes from '@/popup/router/routes.ts'
+import routes from '../../popup/router/routes.ts'
 
 const menus: MenuOption[] = routes.map((route) => {
   return {

@@ -16,10 +16,9 @@
         "<all_urls>"
       ],
       "js": [
-        "content.js"
+        "src/content.ts"
       ],
-      "run_at": "document_start",
-      "type": "module"
+      "run_at": "document_start"
     }
   ],
   "web_accessible_resources": [

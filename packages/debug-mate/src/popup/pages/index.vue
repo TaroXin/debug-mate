@@ -2,14 +2,14 @@
 import type { NeedVariableWithValue } from '@debug-mate/types'
 import type { FormInst, FormRules } from 'naive-ui'
 import type { DatePickerType } from 'naive-ui/es/date-picker/src/config'
-import { useSystemStore } from '@/store/system.ts'
+import { getConfigKey, getValueKey } from '@debug-mate/shared'
+import { useSystemStore } from '../../store/system.ts'
 import {
   getOriginEnabled,
   getVariableConfig,
   setOriginEnabled,
-} from '@/utils/settings.ts'
-import { verifyEmail, verifyUrl } from '@/utils/verify.ts'
-import { getConfigKey, getValueKey } from '@debug-mate/shared'
+} from '../../utils/settings.ts'
+import { verifyEmail, verifyUrl } from '../../utils/verify.ts'
 
 const systemStore = useSystemStore()
 const configs = ref<NeedVariableWithValue[]>([])

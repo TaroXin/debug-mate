@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getOriginPrivateKey, setOriginPrivateKey } from '@/utils/settings.ts'
+import { getOriginPrivateKey, setOriginPrivateKey } from '../../utils/settings.ts'
 
 const privateKey = ref('')
 const saveLoading = ref(false)

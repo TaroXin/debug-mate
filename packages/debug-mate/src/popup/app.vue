@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useSystemStore } from '@/store/system.ts'
 import { darkTheme, dateZhCN, zhCN } from 'naive-ui'
+import { useSystemStore } from '../store/system.ts'
 
 const systemStore = useSystemStore()
 </script>
