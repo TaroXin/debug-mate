@@ -29,6 +29,7 @@ declare module 'vue' {
     NPopconfirm: typeof import('naive-ui')['NPopconfirm']
     NSpace: typeof import('naive-ui')['NSpace']
     NSwitch: typeof import('naive-ui')['NSwitch']
+    NTimePicker: typeof import('naive-ui')['NTimePicker']
     NTooltip: typeof import('naive-ui')['NTooltip']
     PopupNavBar: typeof import('./src/components/popup-nav-bar/index.vue')['default']
     PopupSideBar: typeof import('./src/components/popup-side-bar/index.vue')['default']

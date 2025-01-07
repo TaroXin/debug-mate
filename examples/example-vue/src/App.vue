@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { setPublicKey, useDebugMate } from '@debug-mate/vue'
+import Dayjs from 'dayjs'
 
 // 私钥内容
 // -----BEGIN PRIVATE KEY-----
@@ -94,11 +95,23 @@ const { value: datetime } = useDebugMate({
   default: Date.now(),
 })
 
+const { value: time } = useDebugMate({
+  type: 'time',
+  name: 'time',
+  label: '时间',
+})
+
 const { value: number } = useDebugMate({
   type: 'number',
   name: 'number',
   label: '数字',
   default: 100,
+})
+
+const { value: integer } = useDebugMate({
+  type: 'integer',
+  name: 'integer',
+  label: '只能是整数',
 })
 
 const { value: privateString } = useDebugMate({
@@ -108,6 +121,10 @@ const { value: privateString } = useDebugMate({
   default: '私有变量哦',
   private: true,
 })
+
+function dateFilter(date?: number, formatter = 'YYYY-MM-DD HH:mm:ss') {
+  return date ? Dayjs(date).format(formatter) : ''
+}
 </script>
 
 <template>
@@ -128,15 +145,23 @@ const { value: privateString } = useDebugMate({
     </p>
 
     <p>
-      日期：{{ date }}
+      日期：{{ dateFilter(date, 'YYYY-MM-DD') }}
     </p>
 
     <p>
-      日期时间：{{ datetime }}
+      日期时间：{{ dateFilter(datetime) }}
+    </p>
+
+    <p>
+      时间：{{ dateFilter(time, 'HH:mm:ss') }}
     </p>
 
     <p>
       数字：{{ number }}
+    </p>
+
+    <p>
+      只能是整数：{{ integer }}
     </p>
 
     <p>

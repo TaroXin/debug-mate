@@ -29,6 +29,9 @@ importers:
       '@debug-mate/vue':
         specifier: workspace:^
         version: link:../../packages/vue
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.6.3)
@@ -1953,6 +1956,9 @@ packages:
 
   dateformat@3.0.3:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
+
+  dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
 
   de-indent@1.0.2:
     resolution: {integrity: sha512-e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==}
@@ -6803,6 +6809,8 @@ snapshots:
   date-fns@3.6.0: {}
 
   dateformat@3.0.3: {}
+
+  dayjs@1.11.13: {}
 
   de-indent@1.0.2: {}
 

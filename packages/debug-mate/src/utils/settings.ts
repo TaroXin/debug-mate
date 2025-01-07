@@ -71,5 +71,7 @@ export async function getVariableConfig(): Promise<NeedVariableWithValue[]> {
     configs.push(c)
   }
 
+  configs.sort((a, b) => a.sort - b.sort)
+
   return configs
 }

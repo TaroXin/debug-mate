@@ -27,7 +27,7 @@ async function initialConfigs() {
   configs.value.forEach((config) => {
     configRules.value[config.name] = {
       trigger: ['blur', 'change'],
-      validator: (_rule, value) => {
+      validator: () => {
         return verifyVariable(config)
       },
     }
@@ -47,16 +47,19 @@ function verifyVariable(config: NeedVariableWithValue): boolean | Error {
 }
 
 async function saveChange() {
-  await variableForm.value?.validate()
-
-  saveLoading.value = true
-  // 只保存值
-  const changes: Record<string, any> = {}
-  configs.value.forEach((config) => {
-    changes[getValueKey(config.name, systemStore.encodedOrigin)] = config.value === '' ? null : config.value
+  variableForm.value?.validate().then(() => {
+    saveLoading.value = true
+    // 只保存值
+    const changes: Record<string, any> = {}
+    configs.value.forEach((config) => {
+      changes[getValueKey(config.name, systemStore.encodedOrigin)] = config.value === '' ? null : config.value
+    })
+    return chrome.storage.local.set(changes)
+  }).then(() => {
+    saveLoading.value = false
+  }).catch(() => {
+    //
   })
-  await chrome.storage.local.set(changes)
-  saveLoading.value = false
 }
 
 async function handleEnabledChanged(v: boolean) {
@@ -110,10 +113,13 @@ initialConfigs()
         <n-switch v-model:value="config.value as boolean" />
       </template>
       <template v-else-if="['number', 'integer'].includes(config.type)">
-        <n-input-number v-model:value="config.value as number" clearable />
+        <n-input-number v-model:value="config.value as number" clearable :precision="config.type === 'integer' ? 0 : undefined" />
       </template>
-      <template v-else-if="['date', 'datetime', 'time'].includes(config.type)">
+      <template v-else-if="['date', 'datetime'].includes(config.type)">
         <n-date-picker v-model:value="config.value as number" :type="config.type as DatePickerType" clearable />
+      </template>
+      <template v-else-if="['time'].includes(config.type)">
+        <n-time-picker v-model:value="config.value as number" clearable />
       </template>
       <div m-l-15 flex="~ items-center gap-10">
         <n-tooltip v-if="config.description" trigger="hover" placement="bottom">

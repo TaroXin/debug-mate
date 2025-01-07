@@ -55,6 +55,13 @@ export interface NeedVariableOptions<T extends NeedVariableType = NeedVariableTy
   default?: TypeMaps<T>
 
   /**
+   * The sort order of the variable.
+   *
+   * 变量的排序。
+   */
+  sort?: number
+
+  /**
    * Is it a private variable?
    *
    * Private variables need to be configured with a public key to take effect.

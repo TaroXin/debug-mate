@@ -30,10 +30,16 @@ function injectScript() {
 }
 
 function addNeedListener() {
+  let variableSort = 0
   listenNeedEvent(async (options) => {
     if (!options?.type || !options?.name) {
       loggerWarn('need event type or name is empty')
       return
+    }
+
+    if (options.sort == null) {
+      options.sort = variableSort
+      variableSort++
     }
 
     // 获取当前页面的路径，作为当前网站的唯一标识
