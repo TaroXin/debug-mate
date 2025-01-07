@@ -1,12 +1,20 @@
-import type { NeedVariableOptions } from '@debug-mate/types'
-import { EVENT_NEED } from './keys'
+import type { NeedValue, NeedVariableOptionsInner } from '@debug-mate/types'
+import { EVENT_NEED, EVENT_NEED_VALUE, EVENT_VALUE_CHANGE } from './keys'
 
-export function listenNeedEvent(callback?: (options: NeedVariableOptions) => void) {
-  window.addEventListener(EVENT_NEED, (e: CustomEvent<NeedVariableOptions>) => {
+export function listenNeedEvent(callback?: (options: NeedVariableOptionsInner) => void) {
+  window.addEventListener(EVENT_NEED, (e: CustomEvent<NeedVariableOptionsInner>) => {
     callback?.(e.detail)
   })
 }
 
-export function listenNeedValueEvent() {}
+export function listenNeedValueEvent(callback?: (detail: NeedValue) => void) {
+  window.addEventListener(EVENT_NEED_VALUE, (e: CustomEvent<NeedValue>) => {
+    callback?.(e.detail)
+  })
+}
 
-export function listenValueChangeEvent() {}
+export function listenValueChangeEvent(callback?: (detail: NeedValue) => void) {
+  window.addEventListener(EVENT_VALUE_CHANGE, (e: CustomEvent<NeedValue>) => {
+    callback?.(e.detail)
+  })
+}

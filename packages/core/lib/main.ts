@@ -1,5 +1,5 @@
 import type { NeedCallback, NeedValue, NeedVariableOptions, NeedVariableType, TypeMaps } from '@debug-mate/types'
-import { dispatchNeedEvent, encodePrivate } from '@debug-mate/shared'
+import { dispatchNeedEvent, encodePrivate, listenNeedValueEvent, listenValueChangeEvent } from '@debug-mate/shared'
 
 const valueChangeListeners: Record<string, ((value: TypeMaps<any>) => void)[]> = {}
 
@@ -8,14 +8,14 @@ const valueNeedListeners: Record<string, (value: NeedValue) => void> = {}
 let _publicKey = ''
 
 function needValueListener() {
-  window.addEventListener('debug-mate-need-value', (e: CustomEvent<NeedValue>) => {
-    valueNeedListeners[e.detail.name]?.(e.detail)
-    delete valueNeedListeners[e.detail.name]
+  listenNeedValueEvent((detail) => {
+    valueNeedListeners[detail.name]?.(detail)
+    delete valueNeedListeners[detail.name]
   })
 
-  window.addEventListener('debug-mate-value-change', (e: CustomEvent<NeedValue>) => {
-    valueChangeListeners[e.detail.name]?.forEach((callback) => {
-      callback?.(e.detail.value)
+  listenValueChangeEvent((detail) => {
+    valueChangeListeners[detail.name]?.forEach((callback) => {
+      callback?.(detail.value)
     })
   })
 }
@@ -59,7 +59,8 @@ export async function need<T extends NeedVariableType>(options: NeedVariableOpti
 
     dispatchNeedEvent({
       ...options,
-      name: encodeName || options.name,
+      name: options.name,
+      encodeName,
       onChange: undefined,
     })
     valueNeedListeners[options.name] = resolve

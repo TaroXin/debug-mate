@@ -55,13 +55,6 @@ export interface NeedVariableOptions<T extends NeedVariableType = NeedVariableTy
   default?: TypeMaps<T>
 
   /**
-   * The sort order of the variable.
-   *
-   * 变量的排序。
-   */
-  sort?: number
-
-  /**
    * Is it a private variable?
    *
    * Private variables need to be configured with a public key to take effect.
@@ -88,6 +81,22 @@ export interface NeedVariableOptions<T extends NeedVariableType = NeedVariableTy
    * 这里的 value 类型也不应该是 any，而是根据 type 属性来确定。
    */
   onChange?: (value: TypeMaps<T>) => void
+}
+
+export type NeedVariableOptionsInner = NeedVariableOptions & {
+  /**
+   * The name of the variable after encoding.
+   *
+   * 变量编码后的名称。
+   */
+  encodeName?: string
+
+  /**
+   * The sort order of the variable.
+   *
+   * 变量的排序。
+   */
+  sort?: number
 }
 
 export type NeedVariableWithValue = NeedVariableOptions & {

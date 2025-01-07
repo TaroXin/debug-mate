@@ -1,7 +1,7 @@
-import type { NeedVariableOptions } from '@debug-mate/types'
+import type { NeedVariableOptionsInner } from '@debug-mate/types'
 import { EVENT_NEED, EVENT_NEED_VALUE, EVENT_VALUE_CHANGE } from './keys'
 
-export function dispatchNeedEvent(options: NeedVariableOptions) {
+export function dispatchNeedEvent(options: NeedVariableOptionsInner) {
   const event = new CustomEvent(EVENT_NEED, {
     detail: options,
   })

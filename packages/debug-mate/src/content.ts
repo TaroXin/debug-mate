@@ -46,9 +46,9 @@ function addNeedListener() {
     const currentOrigin = getCurrentOrigin()
 
     // 如果变量是私有的，需要解密变量的 name
-    if (options.private) {
-      const decodeName = decodePrivate(options.name, await getPrivateKey(currentOrigin))
-      if (!decodeName) {
+    if (options.private && options.encodeName) {
+      const decodeName = decodePrivate(options.encodeName, await getPrivateKey(currentOrigin))
+      if (!decodeName || decodeName !== options.name) {
         loggerWarn('Decode private variable failed, please check your private key')
         dispatchNeedValueEvent(
           options.name,
@@ -56,8 +56,6 @@ function addNeedListener() {
         )
         return
       }
-
-      options.name = decodeName
     }
 
     // 存储变量的配置
