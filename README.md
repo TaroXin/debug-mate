@@ -101,6 +101,21 @@ useDebugMate({
 })
 ```
 
+## 支持的设置类型
+
+- string
+- email
+- url
+- boolean
+- number
+- integer
+- date
+- time
+- datetime
+- color
+- select
+- multiSelect
+
 ## 工作原理
 
 DebugMate 使用了Chrome插件的 `storage` 来存储调试参数，同时使用了 `window.dispatchEvent` 来实时推送调试参数的变化，这样在调试过程中，开发者以及测试人员可以在不修改源码的情况下，实时改变调试参数，从而达到相应的目的。
