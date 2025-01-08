@@ -87,7 +87,7 @@ function addNeedListener() {
       else {
         chrome.storage.local.set({
           [configKey]: options,
-          [valueKey]: options.default,
+          [valueKey]: options.default === undefined ? null : options.default,
         })
       }
 
