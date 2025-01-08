@@ -11,12 +11,11 @@ export type NeedVariableType =
   | 'color'
 
 export type TypeMaps<T> =
-  T extends 'string' | 'email' | 'url' ? string :
+  T extends 'string' | 'email' | 'url' | 'color' ? string :
     T extends 'number' | 'integer' ? number :
       T extends 'boolean' ? boolean :
         T extends 'date' | 'time' | 'datetime' ? number :
-          T extends 'color' ? string :
-            any
+          any
 
 export interface NeedVariableOptions<T extends NeedVariableType = NeedVariableType> {
   /**
