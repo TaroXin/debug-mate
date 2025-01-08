@@ -122,6 +122,12 @@ const { value: privateString } = useDebugMate({
   private: true,
 })
 
+const { value: myColor } = useDebugMate({
+  type: 'color',
+  name: 'myColor',
+  label: '我需要一个颜色',
+})
+
 function dateFilter(date?: number, formatter = 'YYYY-MM-DD HH:mm:ss') {
   return date ? Dayjs(date).format(formatter) : ''
 }
@@ -167,6 +173,12 @@ function dateFilter(date?: number, formatter = 'YYYY-MM-DD HH:mm:ss') {
     <p>
       私有变量：
       {{ privateString }}
+    </p>
+
+    <p>
+      Color: <span :style="{ background: myColor }">
+        {{ myColor }}
+      </span>
     </p>
   </div>
 </template>

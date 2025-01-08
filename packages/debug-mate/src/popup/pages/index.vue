@@ -120,6 +120,9 @@ initialConfigs()
       <template v-else-if="['time'].includes(config.type)">
         <n-time-picker v-model:value="config.value as number" clearable />
       </template>
+      <template v-else-if="['color'].includes(config.type)">
+        <n-color-picker v-model:value="config.value as string" clearable />
+      </template>
       <div m-l-15 flex="~ items-center gap-10">
         <n-tooltip v-if="config.description" trigger="hover" placement="bottom">
           <template #trigger>
