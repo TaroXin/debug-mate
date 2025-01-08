@@ -1,7 +1,7 @@
-import type { NeedCallback, NeedValue, NeedVariableOptions, NeedVariableType, TypeMaps } from '@debug-mate/types'
+import type { NeedCallback, NeedValue, NeedVariableOptions, NeedVariableType } from '@debug-mate/types'
 import { dispatchNeedEvent, encodePrivate, listenNeedValueEvent, listenValueChangeEvent } from '@debug-mate/shared'
 
-const valueChangeListeners: Record<string, ((value: TypeMaps<any>) => void)[]> = {}
+const valueChangeListeners: Record<string, NeedCallback<any>[]> = {}
 
 const valueNeedListeners: Record<string, (value: NeedValue) => void> = {}
 
@@ -83,6 +83,8 @@ export function removeValueChangeListener<T extends NeedVariableType>(key: strin
 export function setPublicKey(publicKey: string) {
   _publicKey = publicKey
 }
+
+export * from '@debug-mate/types'
 
 export default {
   need,

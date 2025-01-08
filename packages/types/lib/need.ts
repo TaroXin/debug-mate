@@ -9,13 +9,34 @@ export type NeedVariableType =
   | 'time'
   | 'datetime'
   | 'color'
+  | 'select'
+  | 'multiSelect'
 
 export type TypeMaps<T> =
-  T extends 'string' | 'email' | 'url' | 'color' ? string :
+  T extends 'string' | 'email' | 'url' | 'color' | 'select' ? string :
     T extends 'number' | 'integer' ? number :
       T extends 'boolean' ? boolean :
         T extends 'date' | 'time' | 'datetime' ? number :
-          any
+          T extends 'multiSelect' ? string[] :
+            any
+
+export interface VariableSelectOption {
+  /**
+   * The label displayed for the option in the DateMate plugin.
+   *
+   * 显示在 DateMate 插件中的选项标题。
+   */
+  label: string
+
+  /**
+   * The value of the option.
+   *
+   * 选项的值。
+   */
+  value: string
+
+  [p: string]: any
+}
 
 export interface NeedVariableOptions<T extends NeedVariableType = NeedVariableType> {
   /**
@@ -52,6 +73,13 @@ export interface NeedVariableOptions<T extends NeedVariableType = NeedVariableTy
    * 变量的默认值。
    */
   default?: TypeMaps<T>
+
+  /**
+   * The select options of the variable, only valid when type is 'select' or 'multiSelect'.
+   *
+   * 变量可选项, 只有在 type 为 'select' 或者 'multiSelect' 时才有效。
+   */
+  options?: VariableSelectOption[]
 
   /**
    * Is it a private variable?

@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite dev --port 7777 --host",
-    "build": "vite build",
+    "build:chrome": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -51,7 +51,7 @@ async function saveChange() {
     // 只保存值
     const changes: Record<string, any> = {}
     configs.value.forEach((config) => {
-      changes[getValueKey(config.name, systemStore.encodedOrigin)] = config.value === '' ? null : config.value
+      changes[getValueKey(config.name, systemStore.encodedOrigin)] = config.value === '' ? null : toRaw(config.value)
     })
     return chrome.storage.local.set(changes)
   }).then(() => {
@@ -122,6 +122,14 @@ initialConfigs()
       </template>
       <template v-else-if="['color'].includes(config.type)">
         <n-color-picker v-model:value="config.value as string" clearable />
+      </template>
+      <template v-else-if="['select', 'multiSelect'].includes(config.type)">
+        <n-select
+          v-model:value="config.value as Array<string> | string"
+          :options="config.options"
+          :multiple="config.type === 'multiSelect'"
+          clearable
+        />
       </template>
       <div m-l-15 flex="~ items-center gap-10">
         <n-tooltip v-if="config.description" trigger="hover" placement="bottom">

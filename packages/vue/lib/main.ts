@@ -3,6 +3,8 @@ import type { NeedVariableOptions, NeedVariableType, TypeMaps } from '@debug-mat
 import { addValueChangeListener, setPublicKey as coreSetPublicKey, need } from '@debug-mate/core'
 import { ref } from 'vue-demi'
 
+export * from '@debug-mate/types'
+
 export function useDebugMate<T extends NeedVariableType>(options: NeedVariableOptions<T>) {
   const value = ref<TypeMaps<T> | undefined>()
 

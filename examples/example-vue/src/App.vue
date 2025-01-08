@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { setPublicKey, useDebugMate } from '@debug-mate/vue'
+import { setPublicKey, useDebugMate, type VariableSelectOption } from '@debug-mate/vue'
 import Dayjs from 'dayjs'
 
 // 私钥内容
@@ -128,6 +128,33 @@ const { value: myColor } = useDebugMate({
   label: '我需要一个颜色',
 })
 
+const options: VariableSelectOption[] = [
+  {
+    label: '选项1',
+    value: 'id1',
+  },
+  {
+    label: '选项2',
+    value: 'id2',
+  },
+]
+
+const { value: selectedValue } = useDebugMate({
+  type: 'select',
+  name: 'selectedValue',
+  label: '下拉框',
+  default: 'id1',
+  options,
+})
+
+const { value: multiSelect } = useDebugMate({
+  type: 'multiSelect',
+  name: 'selectedValue2',
+  label: '多选下拉框',
+  default: ['id1'],
+  options,
+})
+
 function dateFilter(date?: number, formatter = 'YYYY-MM-DD HH:mm:ss') {
   return date ? Dayjs(date).format(formatter) : ''
 }
@@ -179,6 +206,16 @@ function dateFilter(date?: number, formatter = 'YYYY-MM-DD HH:mm:ss') {
       Color: <span :style="{ background: myColor }">
         {{ myColor }}
       </span>
+    </p>
+
+    <p>
+      下拉框：
+      {{ options.find(item => item.value === selectedValue)?.label }}
+    </p>
+
+    <p>
+      多选下拉框：{{ multiSelect }}
+      <!--      {{ multiSelect?.map(item => options.find(option => option.value === item)?.label).join(',') }} -->
     </p>
   </div>
 </template>
