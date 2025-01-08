@@ -6,6 +6,7 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 import manifest from './manifest.json'
+import pkg from './package.json'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -31,7 +32,10 @@ export default defineConfig({
       resolvers: [NaiveUiResolver()],
     }),
     crx({
-      manifest,
+      manifest: {
+        ...manifest,
+        version: pkg.version,
+      },
     }),
   ],
 })

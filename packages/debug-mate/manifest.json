@@ -1,5 +1,6 @@
 {
   "name": "DebugMate",
+  "description": "A debugging tool designed for developers and testers.",
   "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
