@@ -8,6 +8,11 @@
 <p align="center">
     面向开发人员与测试人员的调试伙伴
 </p>
+<p align="center">
+  <a href="./README.md">中文</a>
+  |
+  <a href="./README_EN.md">English</a>
+</p>
 
 ## 安装
 

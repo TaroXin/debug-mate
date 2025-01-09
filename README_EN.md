@@ -1,15 +1,78 @@
-<p align="center" style="font-size: 22px; font-weight: bold">
-    DebugMate
-</p>
-<p align="center" style="font-size: 14px;">
-    面向开发人员与测试人员的调试伙伴
+<p align="center">
+  <img src="icon_128.png" width="128" alt="Logo">
 </p>
 
+<p align="center" style="font-size: 24px; font-weight: bold">
+    DebugMate
+</p>
+<p align="center">
+    Debugging Buddy for Developers and Testers
+</p>
+<p align="center">
+  <a href="./README.md">中文</a>
+  |
+  <a href="./README_EN.md">English</a>
+</p>
+
+## Install
+
+```shell
+pnpm add @debug-mate/core
+npm i @debug-mate/core
+```
+
+If you're using Vue, you can skip the above installation steps and directly install the Vue support library.
+
+```shell
+pnpm add @debug-mate/vue
+npm i @debug-mate/vue
+```
+
+## Use in Javascript
+
+```js
+import DebugMate from '@debug-mate/core'
+
+const { value: showFormId } = await DebugMate.need({
+    name: 'showFormId',
+    label: 'Display Form Id',
+    description: 'Displays the form ID on the XXXXX page',
+    type: 'boolean',
+    default: false,
+    /// Is private variable?
+    private: true,
+    onChange: (value) => {}
+});
+
+// Subscription Value Changed
+DebugMate.addValueChangeListener('showFormId', (value) => {})
+```
+
+## Use in Vue
+
+```ts
+const { value: showFormId } = useDebugMate<boolean>({
+    name: 'showFormId',
+    label: 'Display Form Id',
+    description: 'Displays the form ID on the XXXXX page',
+    type: 'boolean',
+    default: false,
+    /// Is private variable?
+    private: true,
+})
+```
+
+## Settings for Making Variables Private
+
+Don’t want other devs messing with your variables? Just make them private! Once they’re locked down, no one can access or tweak them without the private key.
+
+DateMate uses [jsencrypt](https://www.npmjs.com/package/jsencrypt?activeTab=readme) for RSA encryption and decryption. You can obtain the public and private keys from its `README` file or generate them through an online website.
+
+### Use in Javascript
 ```ts
 // 调试参数私有化
 import DebugMate from '@debug-mate/core'
 
-// 公私钥设计，页面设置公钥，在插件上传私钥
 DebugMate.setPublicKey(`
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8Ign5/My3MU3l7ypjRlG
@@ -21,40 +84,39 @@ tGvnhWu7jkv0xLdmZ12Vk6XbcmO59TbRDVhvmust54iV5bSvthjrzHojpmHwcCR9
 9QIDAQAB
 -----END PUBLIC KEY-----
 `)
-```
 
-普通JS中使用
+// 接着你可以在使用过程中进行参数私有化
 
-```js
-import DebugMate from '@debug-mate/core'
-
-const { value: showFormId, setValue } = DebugMate.need({
-    name: 'showFormId',
-    title: '是否显示表单ID',
-    description: '用于在XXXXX页面显示其表单ID',
-    type: 'boolean',
-    default: false,
-    /// 是否启用私有化
-    private: true,
-    
-    // 直接使用字段订阅值
-    onChange: (value) => {}
-});
-
-// 订阅值改变
-DebugMate.addValueChangeListener('showFormId', (value) => {})
-```
-
-Vue 使用
-```ts
-const { value: showFormId, setValue } = useDebugMate<boolean>({
-    name: 'showFormId',
-    title: '是否显示表单ID',
-    description: '用于在XXXXX页面显示其表单ID',
-    type: 'boolean',
-    default: false,
-    /// 是否启用私有化
-    private: true,
+DebugMate.need({
+  // ...,
+  private: true,
 })
 ```
 
+### Use in Vue
+
+```ts
+import { setPublicKey, useDebugMate } from '@debug-mate/vue'
+
+setPublicKey(``)
+
+useDebugMate({
+  // ...,
+  private: true,
+})
+```
+
+## Types of Settings We Support
+
+- string
+- email
+- url
+- boolean
+- number
+- integer
+- date
+- time
+- datetime
+- color
+- select
+- multiSelect
