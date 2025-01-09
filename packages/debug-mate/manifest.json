@@ -30,6 +30,6 @@
   ],
   "permissions": [
     "storage",
-    "tabs"
+    "activeTab"
   ]
 }
