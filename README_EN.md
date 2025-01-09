@@ -14,6 +14,10 @@
   <a href="./README_EN.md">English</a>
 </p>
 
+## Demo
+
+https://github.com/user-attachments/assets/91c4c47d-d055-4a32-95e0-962877018394
+
 ## Install
 
 ```shell
