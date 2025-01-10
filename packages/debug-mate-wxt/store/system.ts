@@ -1,5 +1,5 @@
+import { getCurrentOrigin } from '@/utils/settings'
 import { defineStore } from 'pinia'
-import { getCurrentOrigin } from '../utils/settings.ts'
 
 export const useSystemStore = defineStore('system', () => {
   const isDark = ref(true)

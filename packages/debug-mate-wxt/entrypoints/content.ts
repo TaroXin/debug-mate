@@ -10,7 +10,6 @@ import {
   listenNeedEvent,
   STORAGE_VALUE_APPEND,
 } from '@debug-mate/shared'
-import { loggerWarn } from './utils/console.ts'
 
 function getCurrentOrigin(): string {
   return encodeURIComponent(window.location.origin)
@@ -19,12 +18,6 @@ function getCurrentOrigin(): string {
 export async function getPrivateKeyData(origin: string) {
   const key = getPrivateKey(origin)
   return (await chrome.storage.local.get(key))[key]
-}
-
-function injectScript() {
-  const script = document.createElement('script')
-  script.src = chrome.runtime.getURL('inject.js')
-  ;(document.head || document.documentElement).appendChild(script)
 }
 
 function addNeedListener() {
@@ -129,11 +122,13 @@ function addStorageChangeListener() {
   })
 }
 
-function initialize() {
-  injectScript()
+export default defineContentScript({
+  matches: ['<all_urls>'],
+  runAt: 'document_start',
+  async main() {
+    injectScript('/lib/inject.js')
 
-  addNeedListener()
-  addStorageChangeListener()
-}
-
-initialize()
+    addNeedListener()
+    addStorageChangeListener()
+  },
+})

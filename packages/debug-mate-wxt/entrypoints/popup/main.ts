@@ -3,9 +3,9 @@ import { createPersistedState } from 'pinia-plugin-persistedstate'
 import { createApp } from 'vue'
 import App from './app.vue'
 import router from './router'
-import 'virtual:uno.css'
-import '../styles/global.scss'
 import '@unocss/reset/tailwind-compat.css'
+import './global.scss'
+import 'uno.css'
 
 const pinia = createPinia()
 const state = createPersistedState({

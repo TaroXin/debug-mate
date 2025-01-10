@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSystemStore } from '../../store/system.ts'
+import { useSystemStore } from '@/store/system'
 
 const systemStore = useSystemStore()
 </script>
