@@ -20,6 +20,8 @@ https://github.com/user-attachments/assets/91c4c47d-d055-4a32-95e0-962877018394
 
 ## Install
 
+Make sure to install the Chrome browser extension before getting started:  [DebugMate](https://chromewebstore.google.com/detail/debugmate/efbblpnpfoppffekpcpdhpegojfhdihd)
+
 ```shell
 pnpm add @debug-mate/core
 npm i @debug-mate/core

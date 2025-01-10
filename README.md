@@ -20,6 +20,8 @@ https://github.com/user-attachments/assets/91c4c47d-d055-4a32-95e0-962877018394
 
 ## 安装
 
+在使用以前你必须安装 Chrome 浏览器插件: [DebugMate](https://chromewebstore.google.com/detail/debugmate/efbblpnpfoppffekpcpdhpegojfhdihd)
+
 ```shell
 pnpm add @debug-mate/core
 npm i @debug-mate/core
